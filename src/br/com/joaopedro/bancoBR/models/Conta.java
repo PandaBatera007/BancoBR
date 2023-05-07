@@ -32,21 +32,40 @@ public class Conta {
           return nomeUsuario;
      }
 
-     public boolean verificaValorDeposito(int valor){
-          if(valor > 0){
+     public boolean verificaValorDeposito(int valor, int verificaSenha){
+          if(valor > 0 && validarSenha(verificaSenha)){
+               System.out.println("Valor Depositado com Sucesso!");
                depositar(valor);
                return true;
+          }else if(valor < 0){
+               System.out.println("Valor Ínvalido");
           }else
-               return false;
+               System.out.println("Senha Incorreta");
+
+          return false;
      }
 
-     public boolean verificaValorSaque(int valor){
-          if(valor < 0 || valor > getSaldo()){
+     public boolean verificaValorSaque(int valor, int verificaSenha){
+          if(valor <= 0 || valor > getSaldo()){
+               System.out.println("Saldo Insuficiente ou Valor Inválido");
                return false;
-          }else {
+          }else if(validarSenha(verificaSenha)){
+               System.out.println("Valor Sacado com Sucesso!");
                sacar(valor);
                return true;
+          }else{
+               System.out.println("Senha Incorreta");
+               return false;
           }
+
+     }
+
+      private boolean validarSenha(int senha){
+          if(this.senha == senha){
+               return true;
+          }
+          else
+               return false;
      }
 
      void sacar(int valor){
